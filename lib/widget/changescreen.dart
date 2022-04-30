@@ -9,7 +9,7 @@ class ChangeScreen extends StatelessWidget {
     return  Row(
         children: <Widget>[
         Text(whichAccount),
-    SizedBox(width: 25,),
+    SizedBox(width: 30,),
     GestureDetector(
     onTap: onTap,
     child: Text(name,style: TextStyle(

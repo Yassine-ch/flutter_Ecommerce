@@ -1,6 +1,8 @@
 import 'package:e_commerce/screens/login.dart';
 import 'package:e_commerce/widget/changescreen.dart';
 import 'package:e_commerce/widget/mybutton.dart';
+import 'package:e_commerce/widget/mytextformfield.dart';
+import 'package:e_commerce/widget/passwordtextformfield.dart';
 import 'package:flutter/material.dart';
 
 class SignUp extends StatefulWidget {
@@ -26,6 +28,88 @@ class _SignUpState extends State<SignUp> {
       print("no");
     }
   }
+  Widget _buildAllTextFormField(){
+    return Container(
+      height: 340,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children:<Widget> [
+          MyTextFormField(
+            name: "UserName",
+            validator: (value) {
+              if (value.length < 6) {
+                return "Please Fill UserName";
+
+              } else if (value =="") {
+                return "UserName Is Too SHort";
+              }
+              return "";
+            },
+          ),
+          MyTextFormField(
+            name: "Email",
+            validator: (value) {
+              if (value == "") {
+                return "Please fill Email";
+              } else if (!regExp.hasMatch(value)) {
+                return "Email Is Invalid";
+              }
+              return "";
+            },
+          ),
+
+
+          PassWordTextFormField(
+            obserText: obserText,
+            name: "PassWord",
+            validator: (value) {
+              if (value == "") {
+                return "Please fill Password";
+              } else if (value.length < 8) {
+                return "Password is too short";
+              }
+              return "";
+            },
+            onTap: () {
+              obserText = !obserText;
+              FocusScope.of(context).unfocus();
+            },
+          ),
+          MyTextFormField(
+            name: "PhoneNumber",
+            validator: (value) {
+              if (value == "") {
+                return "Please fill a phone Number ";
+              } else if (value.length < 8) {
+                return "Phone Number Must be 8";
+              }
+              return "";
+            },
+          ),
+        ],
+      ),
+    );
+  }
+  Widget _buildBottomPart(){
+    return    Container(
+      height: 400,
+      margin: EdgeInsets.symmetric(horizontal: 10),
+      width: double.infinity,
+      child: Column(
+
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          _buildAllTextFormField(),
+
+          MyButton(onPressed: (){
+            validation();
+          },
+            name: "Sign Up",
+          ),
+        ],
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,8 +120,9 @@ class _SignUpState extends State<SignUp> {
             child: Column(
               children: <Widget>[
                 Container(
-                  height: 250,
+                  height: 100,
                   width: 200,
+
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
@@ -52,104 +137,12 @@ class _SignUpState extends State<SignUp> {
                   ),
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 15,
                 ),
-                Container(
-                  height: 400,
-                  margin: EdgeInsets.symmetric(horizontal: 10),
-                  width: double.infinity,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TextFormField(
-                        validator: (value) {
-                          if (value.length < 6) {
-                            return "Please Fill UserName";
-
-                          } else if (value == "") {
-                            return "UserName Is Too SHort";
-                          }
-                          return "";
-                        },
-                        decoration: InputDecoration(
-                          hintText: "User Name",
-                          hintStyle: TextStyle(
-                            color: Colors.black,
-                          ),
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                      TextFormField(
-                        validator: (value) {
-                          if (value == "") {
-                            return "Please fill Email";
-                          } else if (!regExp.hasMatch(value)) {
-                            return "Email Is Invalid";
-                          }
-                          return "";
-                        },
-                        decoration: InputDecoration(
-                          hintText: "Email",
-                          hintStyle: TextStyle(
-                            color: Colors.black,
-                          ),
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                      TextFormField(
-                        obscureText:obserText ,
-                        validator: (value) {
-                          if (value == "") {
-                            return "Please fill Password";
-                          } else if (value.length < 8) {
-                            return "Password is too short";
-                          }
-                          return "";
-                        },
-                        decoration: InputDecoration(
-                          hintText: "PassWord",
-                          suffixIcon: GestureDetector(
-                            onTap: () {
-                              obserText=!obserText;
-                              FocusScope.of(context).unfocus();
-                            },
-                            child: Icon(
-                              obserText==true?
-                              Icons.visibility:Icons.visibility_off,
-                              color: Colors.black,
-                            ),
-                          ),
-                          hintStyle: TextStyle(
-                            color: Colors.black,
-                          ),
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                      TextFormField(
-                        validator: (value) {
-                          if (value == "") {
-                            return "Please fill a phone Number ";
-                          } else if (value.length < 8) {
-                            return "Phone Number Must be 8";
-                          }
-                          return "";
-                        },
-                        decoration: InputDecoration(
-                          hintText: "Phone Number",
-                          hintStyle: TextStyle(
-                            color: Colors.black,
-                          ),
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                      MyButton(onPressed: (){
-                        validation();
-                      },
-                        name: "Sign Up",
-                      ),
-                    ],
-                  ),
-                ),
+                _buildBottomPart(),
+            SizedBox(
+              height: 15,
+            ),
             ChangeScreen(name: "Login",
               whichAccount: "I Already Have An Account",
               onTap: (){
